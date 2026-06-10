@@ -134,7 +134,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 
 <div class="topbar">
   <div class="topbar-left">
-    <div class="logo">Reserva<span>F5</span></div>
+    <div class="logo">Reserva <span>de Veículos</span></div>
     <div class="tabs">
       <button class="tab active" id="tab-cal" onclick="setTab('cal')">Calendário</button>
       <button class="tab" id="tab-hist" onclick="setTab('hist')">Histórico</button>
@@ -162,7 +162,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
       <div class="cal-panel">
         <div class="cal-header">
           <div class="cal-header-dot" style="background:#3B6D11"></div>
-          <div class="cal-header-name">Polo F5</div>
+          <div class="cal-header-name">F5</div>
           <div class="cal-header-count" id="count-f5">0 reservas</div>
         </div>
         <div class="weekdays" id="wd-f5"></div>
@@ -370,7 +370,7 @@ function openDay(vid, key, d) {
 
 function buildModal(showForm) {
   const {vid,key,d}=modalState;
-  const vLabel=vid==='f5'?'Polo F5':'Fortes';
+  const vLabel=vid==='f5'?'F5':'Fortes';
   const accentColor=vid==='f5'?'#3B6D11':'#A32D2D';
   const rows=cache[`${curYear}-${curMonth}`]||[];
   const entries=(groupByDay(rows.filter(r=>r.veiculo===vid))[key])||[];
@@ -489,7 +489,7 @@ async function renderHist() {
     }
 
     const vehicles=[
-      {id:'f5',label:'Polo F5',color:'#3B6D11',dotColor:'#3B6D11'},
+      {id:'f5',label:'F5',color:'#3B6D11',dotColor:'#3B6D11'},
       {id:'fortes',label:'Fortes',color:'#A32D2D',dotColor:'#A32D2D'}
     ];
 
