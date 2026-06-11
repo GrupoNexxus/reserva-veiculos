@@ -72,6 +72,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .res-obs{font-size:12px;color:#aaa}
 .res-del{background:none;border:none;color:#ccc;cursor:pointer;font-size:20px;line-height:1;padding:2px 4px;flex-shrink:0;transition:color .12s;margin-top:-2px}
 .res-del:hover{color:#E24B4A}
+.res-actions{display:flex;flex-direction:column;align-items:center;gap:2px;flex-shrink:0}
+.res-edit{background:none;border:none;color:#ccc;cursor:pointer;font-size:14px;line-height:1;padding:3px 4px;transition:color .12s}
+.res-edit:hover{color:#378ADD}
 .modal-empty{font-size:13px;color:#aaa;margin-bottom:14px}
 .btn-add{width:100%;padding:9px;border:1.5px dashed #E8E8E4;border-radius:8px;background:none;font-size:13px;color:#888;cursor:pointer;font-family:inherit;transition:border-color .12s,color .12s;margin-top:4px}
 .btn-add:hover{border-color:#aaa;color:#444}
@@ -244,7 +247,7 @@ async function logAuditoria(acao, reserva) {
         obs: reserva.obs || '',
         feito_em: new Date().toISOString(),
         reserva_id: reserva.id || null,
-        feito_por: getUsuario()
+        feito_por: reserva._feito_por || getUsuario()
       })
     });
   } catch(e) { /* auditoria nunca bloqueia a ação principal */ }
@@ -269,7 +272,7 @@ const SEED = {
 };
 
 let curYear=2026, curMonth=5, cache={}, seeded=false;
-let modalState = {vid:null, key:null, d:null, showForm:false};
+let modalState = {vid:null, key:null, d:null, showForm:false, editingId:null};
 
 async function api(path, opts={}) {
   const r = await fetch(SB_URL+'/rest/v1/'+path, {headers:HEADERS,...opts});
@@ -359,7 +362,7 @@ function changeMonth(dir){
 }
 
 function openDay(vid, key, d) {
-  modalState={vid,key,d,showForm:false};
+  modalState={vid,key,d,showForm:false,editingId:null};
   buildModal(false);
   document.getElementById('overlay').classList.add('open');
 }
@@ -388,26 +391,37 @@ function buildModal(showForm) {
           <div class="res-nome">${e.nome}</div>
           <div class="res-dest">📍 ${e.destino}</div>
           ${e.obs?`<div class="res-obs">${e.obs}</div>`:''}
+          ${e.usuario?`<div class="res-obs" style="color:#bbb">Reservado por ${e.usuario}</div>`:''}
         </div>
-        <button class="res-del" onclick="deleteEntry('${e.id}')" title="Remover reserva">×</button>
+        <div class="res-actions">
+          <button class="res-edit" onclick="showEditForm('${e.id}')" title="Editar reserva">✎</button>
+          <button class="res-del" onclick="deleteEntry('${e.id}')" title="Remover reserva">×</button>
+        </div>
       </div>`;
     });
   }
 
-  // Botão adicionar ou formulário
+  // Botão adicionar ou formulário (de adição ou edição)
   if(!showForm){
     html+=`<button class="btn-add" onclick="showAddForm()">+ Adicionar reserva</button>`;
   } else {
     const usuarioAtual=getUsuario();
+    const editing = modalState.editingId ? entries.find(e=>e.id===modalState.editingId) : null;
+    const formTitle = editing ? 'Editar reserva' : 'Nova reserva';
+    const vNome = editing ? editing.nome : '';
+    const vDest = editing ? editing.destino : '';
+    const vObs = editing ? (editing.obs||'') : '';
+    const vUsuario = editing ? (editing.usuario || usuarioAtual) : usuarioAtual;
+    const saveLabel = editing ? 'Salvar alterações' : 'Salvar reserva';
     html+=`<div class="add-form">
-      <div class="add-form-title">Nova reserva</div>
-      <div class="field"><label>Quem está reservando</label><input id="f-usuario" type="text" placeholder="Seu nome" value="${usuarioAtual}"/></div>
-      <div class="field"><label>Nome / pessoas que vão</label><input id="f-nome" type="text" placeholder="Ex: João, Maria"/></div>
-      <div class="field"><label>Destino</label><input id="f-dest" type="text" placeholder="Ex: Sobral"/></div>
-      <div class="field"><label>Observação (opcional)</label><input id="f-obs" type="text" placeholder="Ex: FortesPay, tarde..."/></div>
+      <div class="add-form-title">${formTitle}</div>
+      <div class="field"><label>Quem está fazendo isso</label><input id="f-usuario" type="text" placeholder="Seu nome" value="${vUsuario}"/></div>
+      <div class="field"><label>Nome / pessoas que vão</label><input id="f-nome" type="text" placeholder="Ex: João, Maria" value="${vNome}"/></div>
+      <div class="field"><label>Destino</label><input id="f-dest" type="text" placeholder="Ex: Sobral" value="${vDest}"/></div>
+      <div class="field"><label>Observação (opcional)</label><input id="f-obs" type="text" placeholder="Ex: FortesPay, tarde..." value="${vObs}"/></div>
       <div class="btn-row">
         <button class="btn-cancel-form" onclick="hideAddForm()">Cancelar</button>
-        <button class="btn btn-primary" id="btn-save" onclick="saveEntry()">Salvar reserva</button>
+        <button class="btn btn-primary" id="btn-save" onclick="saveEntry()">${saveLabel}</button>
       </div>
     </div>`;
   }
@@ -420,8 +434,9 @@ function buildModal(showForm) {
   if(showForm) setTimeout(()=>{const el=document.getElementById('f-nome');if(el)el.focus();},80);
 }
 
-function showAddForm(){modalState.showForm=true;buildModal(true);}
-function hideAddForm(){modalState.showForm=false;buildModal(false);}
+function showAddForm(){modalState.showForm=true;modalState.editingId=null;buildModal(true);}
+function showEditForm(id){modalState.showForm=true;modalState.editingId=id;buildModal(true);}
+function hideAddForm(){modalState.showForm=false;modalState.editingId=null;buildModal(false);}
 
 async function saveEntry() {
   const usuario=document.getElementById('f-usuario').value.trim();
@@ -435,18 +450,30 @@ async function saveEntry() {
   if(!ok) return;
   setUsuario(usuario);
   const btn=document.getElementById('btn-save');
+  const isEditing = !!modalState.editingId;
   btn.disabled=true; btn.textContent='Salvando...';
   try{
-    const saved = await api('reservas',{method:'POST',body:JSON.stringify({veiculo:modalState.vid,data:modalState.key,nome,destino,obs,criado_em:new Date().toISOString()})});
-    const savedRow = Array.isArray(saved) ? saved[0] : saved;
-    await logAuditoria('cadastro', {veiculo:modalState.vid, data:modalState.key, nome, destino, obs, id: savedRow?.id});
+    if(isEditing){
+      const id = modalState.editingId;
+      await api(`reservas?id=eq.${id}`,{method:'PATCH',body:JSON.stringify({nome,destino,obs,usuario})});
+      await logAuditoria('edicao', {veiculo:modalState.vid, data:modalState.key, nome, destino, obs, id, _feito_por:usuario});
+      modalState.editingId=null;
+    } else {
+      const saved = await api('reservas',{method:'POST',body:JSON.stringify({veiculo:modalState.vid,data:modalState.key,nome,destino,obs,usuario,criado_em:new Date().toISOString()})});
+      const savedRow = Array.isArray(saved) ? saved[0] : saved;
+      await logAuditoria('cadastro', {veiculo:modalState.vid, data:modalState.key, nome, destino, obs, id: savedRow?.id, _feito_por:usuario});
+    }
     invalidateCache(curYear,curMonth);
-    closeModal();
-    await render();
-    showToast('Reserva salva!');
+    const rows=await fetchMonth(curYear,curMonth);
+    modalState.showForm=false;
+    buildModal(false);
+    renderCalPanel(modalState.vid,rows);
+    document.getElementById('count-f5').textContent=rows.filter(r=>r.veiculo==='f5').length+' reservas';
+    document.getElementById('count-fortes').textContent=rows.filter(r=>r.veiculo==='fortes').length+' reservas';
+    showToast(isEditing?'Reserva atualizada!':'Reserva salva!');
   }catch(e){
     showToast('Erro ao salvar',true);
-    btn.disabled=false; btn.textContent='Salvar reserva';
+    btn.disabled=false; btn.textContent=isEditing?'Salvar alterações':'Salvar reserva';
   }
 }
 
@@ -560,9 +587,14 @@ async function renderAudit() {
         const hF=dt.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',timeZone:'America/Fortaleza'});
         feitoEm=dF+' às '+hF;
       }
-      const acaoBadge=isCad
-        ?`<span style="font-size:10px;font-weight:600;background:#EAF3DE;color:#3B6D11;padding:2px 7px;border-radius:99px">Cadastro</span>`
-        :`<span style="font-size:10px;font-weight:600;background:#FCEAEA;color:#A32D2D;padding:2px 7px;border-radius:99px">Exclusão</span>`;
+      let acaoBadge;
+      if(r.acao==='cadastro'){
+        acaoBadge=`<span style="font-size:10px;font-weight:600;background:#EAF3DE;color:#3B6D11;padding:2px 7px;border-radius:99px">Cadastro</span>`;
+      } else if(r.acao==='edicao'){
+        acaoBadge=`<span style="font-size:10px;font-weight:600;background:#FAEEDA;color:#854F0B;padding:2px 7px;border-radius:99px">Edição</span>`;
+      } else {
+        acaoBadge=`<span style="font-size:10px;font-weight:600;background:#FCEAEA;color:#A32D2D;padding:2px 7px;border-radius:99px">Exclusão</span>`;
+      }
       html+=`<div class="hist-item">
         <div class="hist-dot" style="background:${color}"></div>
         <div style="flex:1;min-width:0">
