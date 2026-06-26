@@ -7,8 +7,10 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#F5F5F3;color:#1a1a18;min-height:100vh}
-.topbar{background:#fff;border-bottom:1px solid #E8E8E4;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
-.topbar-left{display:flex;align-items:center;gap:12px}
+
+/* TOPBAR */
+.topbar{background:#fff;border-bottom:1px solid #E8E8E4;padding:0 24px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10;flex-wrap:wrap;gap:8px}
+.topbar-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
 .logo{font-size:15px;font-weight:600;color:#1a1a18;letter-spacing:-.02em}
 .logo span{color:#3B6D11}
 .tabs{display:flex}
@@ -16,15 +18,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .tab:first-child{border-radius:6px 0 0 6px}
 .tab:last-child{border-radius:0 6px 6px 0;border-left:none}
 .tab.active{background:#1a1a18;color:#fff;border-color:#1a1a18}
-.main{max-width:960px;margin:0 auto;padding:24px 16px}
+.legend{display:flex;gap:16px;align-items:center}
+.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#666}
+.legend-dot{width:8px;height:8px;border-radius:50%}
+
+/* MAIN */
+.main{max-width:980px;margin:0 auto;padding:24px 16px}
 .nav-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px}
 .month-nav{display:flex;align-items:center;gap:10px}
 .month-nav button{background:#fff;border:1px solid #E8E8E4;color:#1a1a18;width:30px;height:30px;border-radius:6px;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center}
 .month-nav button:hover{border-color:#aaa}
 .month-title{font-size:16px;font-weight:600;min-width:160px;text-align:center;letter-spacing:-.02em}
-.legend{display:flex;gap:16px;align-items:center}
-.legend-item{display:flex;align-items:center;gap:6px;font-size:12px;color:#666}
-.legend-dot{width:8px;height:8px;border-radius:50%}
+
+/* CALENDÁRIOS */
 .cal-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .cal-panel{background:#fff;border:1px solid #E8E8E4;border-radius:12px;overflow:hidden}
 .cal-header{padding:12px 14px 10px;border-bottom:1px solid #F0F0EC;display:flex;align-items:center;gap:8px}
@@ -34,41 +40,52 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .weekdays{display:grid;grid-template-columns:repeat(7,1fr);padding:6px 8px 0}
 .wd{font-size:10px;color:#aaa;text-align:center;padding:3px 0;font-weight:500;text-transform:uppercase;letter-spacing:.04em}
 .days{display:grid;grid-template-columns:repeat(7,1fr);padding:4px 8px 10px;gap:3px}
-.day{min-height:48px;border-radius:7px;padding:5px 4px;cursor:pointer;position:relative;transition:background .12s;display:flex;flex-direction:column;align-items:center;gap:2px}
+
+/* DIAS */
+.day{min-height:58px;border-radius:7px;padding:4px 3px;cursor:pointer;position:relative;transition:background .12s;display:flex;flex-direction:column;align-items:center;gap:1px}
 .day:hover:not(.empty){background:#F0F0EC}
 .empty{cursor:default}
 .weekend{background:#FAFAF8;cursor:pointer}
-.day-num{font-size:11px;font-weight:500;color:#aaa;line-height:1}
+.day-num{font-size:11px;font-weight:500;color:#aaa;line-height:1;margin-bottom:1px}
 .weekend .day-num{color:#aaa}
 .day.booked-f5{background:#F0F7E6}
 .day.booked-fortes{background:#FCEAEA}
 .day.booked-f5 .day-num{color:#3B6D11;font-weight:600}
 .day.booked-fortes .day-num{color:#A32D2D;font-weight:600}
-.chip{font-size:9px;font-weight:500;border-radius:3px;padding:1px 4px;line-height:1.4;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;text-align:center}
+
+/* CHIPS */
+.chip{font-size:8px;font-weight:500;border-radius:3px;padding:1px 3px;line-height:1.4;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;text-align:center}
 .chip-f5{background:#C0DD97;color:#27500A}
 .chip-fortes{background:#F7C1C1;color:#791F1F}
+.chip-dest{font-size:7px;font-weight:400;color:#777;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;width:100%;text-align:center;line-height:1.3}
+.chip-dest-f5{color:#3B6D11}
+.chip-dest-fortes{color:#A32D2D}
+
 .today-num{background:#1a1a18;color:#fff!important;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600}
-.weekend-label{font-size:9px;color:#bbb;margin-top:1px}
-.user-banner{background:#fff;border-bottom:1px solid #E8E8E4;padding:10px 24px;display:flex;align-items:center;gap:10px;font-size:13px}
+.weekend-label{font-size:8px;color:#bbb;margin-top:1px}
+
+/* USER BANNER */
+.user-banner{background:#fff;border-bottom:1px solid #E8E8E4;padding:10px 24px;display:flex;align-items:center;gap:10px;font-size:13px;flex-wrap:wrap}
 .user-banner-label{color:#888;flex-shrink:0}
 .user-banner-name{font-weight:600;color:#1a1a18;cursor:pointer;text-decoration:underline;text-decoration-style:dotted;text-underline-offset:2px}
 .user-banner-name:hover{color:#3B6D11}
 .user-banner-change{font-size:12px;color:#aaa;cursor:pointer;margin-left:4px}
 .user-banner-change:hover{color:#555}
 
-/* Modal */
+/* MODAL */
 .overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;z-index:100;padding:16px;opacity:0;pointer-events:none;transition:opacity .15s}
 .overlay.open{opacity:1;pointer-events:all}
-.modal{background:#fff;border-radius:14px;padding:22px;width:100%;max-width:400px;transform:translateY(10px);transition:transform .15s;border:1px solid #E8E8E4}
+.modal{background:#fff;border-radius:14px;padding:22px;width:100%;max-width:420px;max-height:90vh;overflow-y:auto;transform:translateY(10px);transition:transform .15s;border:1px solid #E8E8E4}
 .overlay.open .modal{transform:translateY(0)}
 .modal-title{font-size:16px;font-weight:600;letter-spacing:-.02em;margin-bottom:2px}
 .modal-sub{font-size:12px;color:#888;margin-bottom:16px}
 
-/* Modal — visualização de reservas */
+/* CARDS DE RESERVA */
 .res-card{background:#F5F5F3;border-radius:8px;padding:10px 12px;margin-bottom:8px;display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
 .res-info{flex:1;min-width:0}
 .res-nome{font-size:14px;font-weight:600;color:#1a1a18;margin-bottom:2px}
 .res-dest{font-size:13px;color:#555;margin-bottom:2px}
+.res-horario{font-size:11px;color:#888;margin-bottom:2px}
 .res-obs{font-size:12px;color:#aaa}
 .res-del{background:none;border:none;color:#ccc;cursor:pointer;font-size:20px;line-height:1;padding:2px 4px;flex-shrink:0;transition:color .12s;margin-top:-2px}
 .res-del:hover{color:#E24B4A}
@@ -79,14 +96,16 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .btn-add{width:100%;padding:9px;border:1.5px dashed #E8E8E4;border-radius:8px;background:none;font-size:13px;color:#888;cursor:pointer;font-family:inherit;transition:border-color .12s,color .12s;margin-top:4px}
 .btn-add:hover{border-color:#aaa;color:#444}
 
-/* Formulário inline */
+/* FORMULÁRIO */
 .add-form{margin-top:12px;padding-top:12px;border-top:1px solid #F0F0EC}
 .add-form-title{font-size:11px;font-weight:600;color:#888;text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px}
 .field{margin-bottom:10px}
 .field label{font-size:11px;font-weight:500;color:#888;display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.04em}
-.field input{width:100%;border:1px solid #E8E8E4;border-radius:7px;padding:8px 10px;font-size:13px;color:#1a1a18;font-family:inherit;background:#FAFAF8;transition:border-color .12s}
-.field input:focus{outline:none;border-color:#378ADD;background:#fff}
-.field input.err{border-color:#E24B4A}
+.field input,.field select{width:100%;border:1px solid #E8E8E4;border-radius:7px;padding:8px 10px;font-size:13px;color:#1a1a18;font-family:inherit;background:#FAFAF8;transition:border-color .12s}
+.field input:focus,.field select:focus{outline:none;border-color:#378ADD;background:#fff}
+.field input.err,.field select.err{border-color:#E24B4A}
+.horario-row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.horario-hint{font-size:11px;color:#aaa;margin-top:4px}
 .btn-row{display:flex;gap:8px;justify-content:flex-end;margin-top:14px}
 .btn{padding:8px 16px;border-radius:7px;font-size:13px;cursor:pointer;border:none;font-family:inherit;font-weight:500;transition:background .12s}
 .btn-primary{background:#1a1a18;color:#fff}
@@ -97,39 +116,54 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
 .btn-cancel-form{background:none;border:none;font-size:12px;color:#aaa;cursor:pointer;font-family:inherit;padding:0;margin-right:auto}
 .btn-cancel-form:hover{color:#555}
 
-/* Toast */
+/* TOAST */
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:#1a1a18;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;font-weight:500;opacity:0;transition:all .2s;pointer-events:none;z-index:200;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .toast.err-toast{background:#A32D2D}
 
-/* Loading */
+/* LOADING */
 .loading{display:flex;align-items:center;justify-content:center;padding:40px;color:#aaa;font-size:13px;gap:8px}
 .spinner{width:16px;height:16px;border:2px solid #E8E8E4;border-top-color:#1a1a18;border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-/* Histórico */
+/* HISTÓRICO */
 .hist-section{margin-bottom:24px}
 .hist-section-header{display:flex;align-items:center;gap:8px;margin-bottom:10px}
 .hist-section-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .hist-section-title{font-size:13px;font-weight:600;letter-spacing:-.01em}
 .hist-section-count{font-size:11px;color:#aaa;background:#F5F5F3;padding:2px 7px;border-radius:99px}
 .hist-list{background:#fff;border:1px solid #E8E8E4;border-radius:12px;overflow:hidden}
-.hist-item{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid #F5F5F3}
+.hist-item{display:flex;align-items:center;gap:12px;padding:11px 16px;border-bottom:1px solid #F5F5F3;flex-wrap:wrap}
 .hist-item:last-child{border-bottom:none}
 .hist-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
 .hist-name{font-size:13px;font-weight:500}
 .hist-detail{font-size:12px;color:#888}
-.hist-meta{text-align:right;flex-shrink:0}
+.hist-horario{font-size:11px;color:#aaa;margin-top:1px}
+.hist-meta{text-align:right;flex-shrink:0;margin-left:auto}
 .hist-date{font-size:12px;color:#555;font-weight:500}
 .hist-time{font-size:11px;color:#aaa;margin-top:1px}
 .empty-state{text-align:center;padding:32px;color:#aaa;font-size:13px;background:#fff;border:1px solid #E8E8E4;border-radius:12px}
 
-@media(max-width:600px){
+/* AUDITORIA */
+.audit-badge{font-size:10px;font-weight:600;padding:2px 7px;border-radius:99px}
+
+/* RESPONSIVO */
+@media(max-width:680px){
   .cal-grid{grid-template-columns:1fr}
-  .topbar{padding:0 14px}
-  .main{padding:16px 10px}
-  .day{min-height:40px}
+  .topbar{height:auto;padding:10px 14px}
+  .topbar-left{gap:8px}
+  .main{padding:12px 8px}
+  .day{min-height:50px}
   .legend{display:none}
+  .tabs .tab{padding:5px 10px;font-size:12px}
+  .horario-row{grid-template-columns:1fr}
+  .hist-item{gap:8px}
+  .modal{padding:16px}
+}
+@media(max-width:400px){
+  .day{min-height:42px}
+  .chip{font-size:7px}
+  .chip-dest{font-size:6px}
 }
 </style>
 </head>
@@ -221,7 +255,7 @@ function renderBanner(){
       <span class="user-banner-name" onclick="promptUsuario()" title="Clique para alterar">${u}</span>
       <span class="user-banner-change" onclick="promptUsuario()">(alterar)</span>`;
   } else {
-    el.innerHTML=`<span class="user-banner-label">⚠️ Identifique-se para registrar suas ações:</span>
+    el.innerHTML=`<span class="user-banner-label">⚠️ Identifique-se:</span>
       <span class="user-banner-name" onclick="promptUsuario()" style="color:#A32D2D">Clique aqui para informar seu nome</span>`;
   }
 }
@@ -250,24 +284,24 @@ async function logAuditoria(acao, reserva) {
         feito_por: reserva._feito_por || getUsuario()
       })
     });
-  } catch(e) { /* auditoria nunca bloqueia a ação principal */ }
+  } catch(e) {}
 }
 
 const SEED = {
-  f5:[{data:'2026-06-01',nome:'Alessandro',destino:'Mucambo',obs:''}],
+  f5:[{data:'2026-06-01',nome:'Alessandro',destino:'Mucambo',obs:'',horario:'dia_todo'}],
   fortes:[
-    {data:'2026-06-02',nome:'César',destino:'Sobral',obs:''},
-    {data:'2026-06-03',nome:'Elisama / Eduardo',destino:'Santa Quitéria',obs:''},
-    {data:'2026-06-08',nome:'César',destino:'Sobral',obs:'Tarde'},
-    {data:'2026-06-09',nome:'Elisama / Karyne / Alana / William',destino:'Hidrolândia / Nova Russas',obs:'FortesPay'},
-    {data:'2026-06-10',nome:'Elisama / Karyne / Alana / William',destino:'Nova Russas / Crateús',obs:'FortesPay'},
-    {data:'2026-06-11',nome:'Elisama / Karyne / Alana / William',destino:'Crateús',obs:'FortesPay'},
-    {data:'2026-06-15',nome:'Jorge',destino:'Camocim',obs:''},
-    {data:'2026-06-16',nome:'Jorge',destino:'Camocim',obs:''},
-    {data:'2026-06-18',nome:'Walney / Eduardo',destino:'Meruoca',obs:''},
-    {data:'2026-06-23',nome:'Elisama / Eduardo / Karina',destino:'Ibiapaba',obs:''},
-    {data:'2026-06-24',nome:'Elisama / Eduardo / Karina',destino:'Ibiapaba',obs:''},
-    {data:'2026-06-26',nome:'Elisama / Eduardo',destino:'Marco',obs:''}
+    {data:'2026-06-02',nome:'César',destino:'Sobral',obs:'',horario:'dia_todo'},
+    {data:'2026-06-03',nome:'Elisama / Eduardo',destino:'Santa Quitéria',obs:'',horario:'dia_todo'},
+    {data:'2026-06-08',nome:'César',destino:'Sobral',obs:'Tarde',horario:'tarde'},
+    {data:'2026-06-09',nome:'Elisama / Karyne / Alana / William',destino:'Hidrolândia / Nova Russas',obs:'FortesPay',horario:'dia_todo'},
+    {data:'2026-06-10',nome:'Elisama / Karyne / Alana / William',destino:'Nova Russas / Crateús',obs:'FortesPay',horario:'dia_todo'},
+    {data:'2026-06-11',nome:'Elisama / Karyne / Alana / William',destino:'Crateús',obs:'FortesPay',horario:'dia_todo'},
+    {data:'2026-06-15',nome:'Jorge',destino:'Camocim',obs:'',horario:'dia_todo'},
+    {data:'2026-06-16',nome:'Jorge',destino:'Camocim',obs:'',horario:'dia_todo'},
+    {data:'2026-06-18',nome:'Walney / Eduardo',destino:'Meruoca',obs:'',horario:'dia_todo'},
+    {data:'2026-06-23',nome:'Elisama / Eduardo / Karina',destino:'Ibiapaba',obs:'',horario:'dia_todo'},
+    {data:'2026-06-24',nome:'Elisama / Eduardo / Karina',destino:'Ibiapaba',obs:'',horario:'dia_todo'},
+    {data:'2026-06-26',nome:'Elisama / Eduardo',destino:'Marco',obs:'',horario:'dia_todo'}
   ]
 };
 
@@ -309,8 +343,28 @@ function groupByDay(rows){
   return map;
 }
 
+function formatHorario(h){
+  if(!h||h==='dia_todo') return '🕐 Dia todo';
+  if(h==='manha') return '🌅 Manhã';
+  if(h==='tarde') return '🌇 Tarde';
+  // formato "08:00-17:00" ou só "08:00"
+  if(h.includes('-')) {
+    const [ini, fim] = h.split('-');
+    return `⏰ ${ini} até ${fim}`;
+  }
+  return `⏰ ${h}`;
+}
+
+function horarioChip(h){
+  if(!h||h==='dia_todo') return '';
+  if(h==='manha') return '☀M';
+  if(h==='tarde') return '🌆T';
+  return h.substring(0,5);
+}
+
 function renderCalPanel(vid, rows) {
   const chipClass = vid==='f5'?'chip-f5':'chip-fortes';
+  const destClass = vid==='f5'?'chip-dest-f5':'chip-dest-fortes';
   const bookedClass = vid==='f5'?'booked-f5':'booked-fortes';
   const map = groupByDay(rows.filter(r=>r.veiculo===vid));
   const count = rows.filter(r=>r.veiculo===vid).length;
@@ -334,9 +388,12 @@ function renderCalPanel(vid, rows) {
     const numEl=isToday&&!weekend?`<div class="today-num">${d}</div>`:`<div class="day-num">${d}</div>`;
     let inner=numEl;
     entries.slice(0,2).forEach(e=>{
-      inner+=`<div class="chip ${chipClass}" title="${e.nome}">${e.nome.split('/')[0].trim()}</div>`;
+      const primeiroNome = e.nome.split('/')[0].trim().split(' ')[0];
+      const destShort = e.destino ? e.destino.split('/')[0].trim() : '';
+      inner+=`<div class="chip ${chipClass}" title="${e.nome}">${primeiroNome}</div>`;
+      if(destShort) inner+=`<div class="chip-dest ${destClass}" title="${e.destino}">📍${destShort}</div>`;
     });
-    if(entries.length>2) inner+=`<div style="font-size:9px;color:#aaa">+${entries.length-2}</div>`;
+    if(entries.length>2) inner+=`<div style="font-size:8px;color:#aaa">+${entries.length-2}</div>`;
     if(weekend) inner+=`<div class="weekend-label">${new Date(curYear,curMonth,d).getDay()===6?'Sáb':'Dom'}</div>`;
     html+=`<div class="${cls}" onclick="openDay('${vid}','${key}',${d})">${inner}</div>`;
   }
@@ -380,8 +437,6 @@ function buildModal(showForm) {
   document.getElementById('modal-sub').textContent=dayName.charAt(0).toUpperCase()+dayName.slice(1);
 
   let html='';
-
-  // Reservas existentes
   if(entries.length===0){
     html+=`<div class="modal-empty">Nenhuma reserva para este dia.</div>`;
   } else {
@@ -390,18 +445,18 @@ function buildModal(showForm) {
         <div class="res-info">
           <div class="res-nome">${e.nome}</div>
           <div class="res-dest">📍 ${e.destino}</div>
+          <div class="res-horario">${formatHorario(e.horario)}</div>
           ${e.obs?`<div class="res-obs">${e.obs}</div>`:''}
           ${e.usuario?`<div class="res-obs" style="color:#bbb">Reservado por ${e.usuario}</div>`:''}
         </div>
         <div class="res-actions">
-          <button class="res-edit" onclick="showEditForm('${e.id}')" title="Editar reserva">✎</button>
-          <button class="res-del" onclick="deleteEntry('${e.id}')" title="Remover reserva">×</button>
+          <button class="res-edit" onclick="showEditForm('${e.id}')" title="Editar">✎</button>
+          <button class="res-del" onclick="deleteEntry('${e.id}')" title="Remover">×</button>
         </div>
       </div>`;
     });
   }
 
-  // Botão adicionar ou formulário (de adição ou edição)
   if(!showForm){
     html+=`<button class="btn-add" onclick="showAddForm()">+ Adicionar reserva</button>`;
   } else {
@@ -411,14 +466,45 @@ function buildModal(showForm) {
     const vNome = editing ? editing.nome : '';
     const vDest = editing ? editing.destino : '';
     const vObs = editing ? (editing.obs||'') : '';
-    const vUsuario = editing ? (editing.usuario || usuarioAtual) : usuarioAtual;
+    const vUsuario = editing ? (editing.usuario||usuarioAtual) : usuarioAtual;
+    const vHorario = editing ? (editing.horario||'dia_todo') : 'dia_todo';
     const saveLabel = editing ? 'Salvar alterações' : 'Salvar reserva';
+
+    const horarioOpts = [
+      {v:'dia_todo', l:'🕐 Dia todo'},
+      {v:'manha',    l:'🌅 Manhã'},
+      {v:'tarde',    l:'🌇 Tarde'},
+      {v:'hora',     l:'⏰ Horário específico'},
+    ].map(o=>`<option value="${o.v}"${vHorario===o.v||(!editing&&o.v==='dia_todo')?' selected':''}>${o.l}</option>`).join('');
+
+    const isHora = editing && editing.horario && !['dia_todo','manha','tarde'].includes(editing.horario);
+    const [horaIniValue, horaFimValue] = isHora && editing.horario.includes('-')
+      ? editing.horario.split('-')
+      : isHora ? [editing.horario, ''] : ['', ''];
+
     html+=`<div class="add-form">
       <div class="add-form-title">${formTitle}</div>
       <div class="field"><label>Quem está fazendo isso</label><input id="f-usuario" type="text" placeholder="Seu nome" value="${vUsuario}"/></div>
       <div class="field"><label>Nome / pessoas que vão</label><input id="f-nome" type="text" placeholder="Ex: João, Maria" value="${vNome}"/></div>
       <div class="field"><label>Destino</label><input id="f-dest" type="text" placeholder="Ex: Sobral" value="${vDest}"/></div>
-      <div class="field"><label>Observação (opcional)</label><input id="f-obs" type="text" placeholder="Ex: FortesPay, tarde..." value="${vObs}"/></div>
+      <div class="field">
+        <label>Período</label>
+        <select id="f-horario-tipo" onchange="toggleHoraInput()">${horarioOpts}</select>
+      </div>
+      <div id="f-hora-wrap" style="${isHora?'':'display:none'}">
+        <div class="horario-row">
+          <div class="field">
+            <label>Horário inicial</label>
+            <input id="f-hora-ini" type="time" value="${horaIniValue}"/>
+          </div>
+          <div class="field">
+            <label>Horário final</label>
+            <input id="f-hora-fim" type="time" value="${horaFimValue}"/>
+            <div class="horario-hint">Opcional</div>
+          </div>
+        </div>
+      </div>
+      <div class="field"><label>Observação (opcional)</label><input id="f-obs" type="text" placeholder="Ex: FortesPay, retorno à tarde..." value="${vObs}"/></div>
       <div class="btn-row">
         <button class="btn-cancel-form" onclick="hideAddForm()">Cancelar</button>
         <button class="btn btn-primary" id="btn-save" onclick="saveEntry()">${saveLabel}</button>
@@ -434,15 +520,34 @@ function buildModal(showForm) {
   if(showForm) setTimeout(()=>{const el=document.getElementById('f-nome');if(el)el.focus();},80);
 }
 
+function toggleHoraInput(){
+  const tipo=document.getElementById('f-horario-tipo')?.value;
+  const wrap=document.getElementById('f-hora-wrap');
+  if(wrap) wrap.style.display = tipo==='hora' ? '' : 'none';
+}
+
 function showAddForm(){modalState.showForm=true;modalState.editingId=null;buildModal(true);}
 function showEditForm(id){modalState.showForm=true;modalState.editingId=id;buildModal(true);}
 function hideAddForm(){modalState.showForm=false;modalState.editingId=null;buildModal(false);}
+
+function getHorarioValue(){
+  const tipo=document.getElementById('f-horario-tipo')?.value;
+  if(tipo==='hora'){
+    const ini=document.getElementById('f-hora-ini')?.value;
+    const fim=document.getElementById('f-hora-fim')?.value;
+    if(ini && fim) return `${ini}-${fim}`;
+    if(ini) return ini;
+    return 'dia_todo';
+  }
+  return tipo||'dia_todo';
+}
 
 async function saveEntry() {
   const usuario=document.getElementById('f-usuario').value.trim();
   const nome=document.getElementById('f-nome').value.trim();
   const destino=document.getElementById('f-dest').value.trim();
   const obs=document.getElementById('f-obs').value.trim();
+  const horario=getHorarioValue();
   let ok=true;
   if(!usuario){document.getElementById('f-usuario').classList.add('err');ok=false;}
   if(!nome){document.getElementById('f-nome').classList.add('err');ok=false;}
@@ -450,18 +555,18 @@ async function saveEntry() {
   if(!ok) return;
   setUsuario(usuario);
   const btn=document.getElementById('btn-save');
-  const isEditing = !!modalState.editingId;
+  const isEditing=!!modalState.editingId;
   btn.disabled=true; btn.textContent='Salvando...';
   try{
     if(isEditing){
-      const id = modalState.editingId;
-      await api(`reservas?id=eq.${id}`,{method:'PATCH',body:JSON.stringify({nome,destino,obs,usuario})});
-      await logAuditoria('edicao', {veiculo:modalState.vid, data:modalState.key, nome, destino, obs, id, _feito_por:usuario});
+      const id=modalState.editingId;
+      await api(`reservas?id=eq.${id}`,{method:'PATCH',body:JSON.stringify({nome,destino,obs,usuario,horario})});
+      await logAuditoria('edicao',{veiculo:modalState.vid,data:modalState.key,nome,destino,obs,id,_feito_por:usuario});
       modalState.editingId=null;
     } else {
-      const saved = await api('reservas',{method:'POST',body:JSON.stringify({veiculo:modalState.vid,data:modalState.key,nome,destino,obs,usuario,criado_em:new Date().toISOString()})});
-      const savedRow = Array.isArray(saved) ? saved[0] : saved;
-      await logAuditoria('cadastro', {veiculo:modalState.vid, data:modalState.key, nome, destino, obs, id: savedRow?.id, _feito_por:usuario});
+      const saved=await api('reservas',{method:'POST',body:JSON.stringify({veiculo:modalState.vid,data:modalState.key,nome,destino,obs,usuario,horario,criado_em:new Date().toISOString()})});
+      const savedRow=Array.isArray(saved)?saved[0]:saved;
+      await logAuditoria('cadastro',{veiculo:modalState.vid,data:modalState.key,nome,destino,obs,id:savedRow?.id,_feito_por:usuario});
     }
     invalidateCache(curYear,curMonth);
     const rows=await fetchMonth(curYear,curMonth);
@@ -479,16 +584,13 @@ async function saveEntry() {
 
 async function deleteEntry(id) {
   const usuario=getUsuario();
-  if(!usuario){
-    alert('Identifique-se antes de remover uma reserva. Clique no seu nome no topo da página.');
-    return;
-  }
-  if(!confirm(`Remover esta reserva? Esta ação será registrada em seu nome (${usuario}).`)) return;
+  if(!usuario){ alert('Identifique-se antes de remover uma reserva.'); return; }
+  if(!confirm(`Remover esta reserva? Será registrada em seu nome (${usuario}).`)) return;
   try{
-    const toDelete = await api(`reservas?id=eq.${id}&select=*`);
-    const reserva = Array.isArray(toDelete) ? toDelete[0] : toDelete;
+    const toDelete=await api(`reservas?id=eq.${id}&select=*`);
+    const reserva=Array.isArray(toDelete)?toDelete[0]:toDelete;
     await api(`reservas?id=eq.${id}`,{method:'DELETE'});
-    if(reserva) await logAuditoria('exclusao', {...reserva, _feito_por: usuario});
+    if(reserva) await logAuditoria('exclusao',{...reserva,_feito_por:usuario});
     invalidateCache(curYear,curMonth);
     const rows=await fetchMonth(curYear,curMonth);
     buildModal(false);
@@ -505,17 +607,16 @@ function handleOverlayClick(e){if(e.target===document.getElementById('overlay'))
 async function renderHist() {
   document.getElementById('hist-container').innerHTML=`<div class="loading"><div class="spinner"></div>Carregando...</div>`;
   try{
-    const rows=await api('reservas?order=data.desc,criado_em.desc&limit=500');
+    // Ordem CRESCENTE por data (mais antigo primeiro)
+    const rows=await api('reservas?order=data.asc,criado_em.asc&limit=500');
     if(!rows||rows.length===0){
       document.getElementById('hist-container').innerHTML=`<div class="empty-state">Nenhuma reserva registrada ainda.</div>`;
       return;
     }
-
     const vehicles=[
-      {id:'f5',label:'F5',color:'#3B6D11',dotColor:'#3B6D11'},
-      {id:'fortes',label:'Fortes',color:'#A32D2D',dotColor:'#A32D2D'}
+      {id:'f5',label:'F5',dotColor:'#3B6D11'},
+      {id:'fortes',label:'Fortes',dotColor:'#A32D2D'}
     ];
-
     let html='';
     for(const v of vehicles){
       const vrows=rows.filter(r=>r.veiculo===v.id);
@@ -525,7 +626,6 @@ async function renderHist() {
           <div class="hist-section-title">${v.label}</div>
           <div class="hist-section-count">${vrows.length} ${vrows.length===1?'reserva':'reservas'}</div>
         </div>`;
-
       if(vrows.length===0){
         html+=`<div class="empty-state">Nenhuma reserva para este veículo.</div>`;
       } else {
@@ -536,16 +636,13 @@ async function renderHist() {
           let cadastradoStr='';
           if(r.criado_em){
             const dt=new Date(r.criado_em);
-            const dCad=dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric',timeZone:'America/Fortaleza'});
-            const hCad=dt.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',timeZone:'America/Fortaleza'});
-            cadastradoStr='Cadastrado em '+dCad+' às '+hCad;
-          } else {
-            cadastradoStr='Horário de cadastro indisponível';
+            cadastradoStr='Cadastrado em '+dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric',timeZone:'America/Fortaleza'})+' às '+dt.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',timeZone:'America/Fortaleza'});
           }
           html+=`<div class="hist-item">
             <div class="hist-dot" style="background:${v.dotColor}"></div>
             <div style="flex:1;min-width:0">
               <div class="hist-name">${r.nome} → ${r.destino}</div>
+              <div class="hist-horario">${formatHorario(r.horario)}</div>
               <div class="hist-detail">${r.obs||''}</div>
             </div>
             <div class="hist-meta">
@@ -558,7 +655,6 @@ async function renderHist() {
       }
       html+=`</div>`;
     }
-
     document.getElementById('hist-container').innerHTML=html;
   }catch(e){
     document.getElementById('hist-container').innerHTML=`<div class="empty-state">Erro ao carregar histórico.</div>`;
@@ -575,7 +671,6 @@ async function renderAudit() {
     }
     let html='<div class="hist-list">';
     for(const r of rows){
-      const isCad=r.acao==='cadastro';
       const color=r.veiculo==='f5'?'#3B6D11':'#A32D2D';
       const vLabel=r.veiculo==='f5'?'F5':'Fortes';
       const [y,m,d]=r.data_viagem.split('-').map(Number);
@@ -583,27 +678,20 @@ async function renderAudit() {
       let feitoEm='';
       if(r.feito_em){
         const dt=new Date(r.feito_em);
-        const dF=dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric',timeZone:'America/Fortaleza'});
-        const hF=dt.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',timeZone:'America/Fortaleza'});
-        feitoEm=dF+' às '+hF;
+        feitoEm=dt.toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric',timeZone:'America/Fortaleza'})+' às '+dt.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit',timeZone:'America/Fortaleza'});
       }
-      let acaoBadge;
-      if(r.acao==='cadastro'){
-        acaoBadge=`<span style="font-size:10px;font-weight:600;background:#EAF3DE;color:#3B6D11;padding:2px 7px;border-radius:99px">Cadastro</span>`;
-      } else if(r.acao==='edicao'){
-        acaoBadge=`<span style="font-size:10px;font-weight:600;background:#FAEEDA;color:#854F0B;padding:2px 7px;border-radius:99px">Edição</span>`;
-      } else {
-        acaoBadge=`<span style="font-size:10px;font-weight:600;background:#FCEAEA;color:#A32D2D;padding:2px 7px;border-radius:99px">Exclusão</span>`;
-      }
+      let badge;
+      if(r.acao==='cadastro') badge=`<span class="audit-badge" style="background:#EAF3DE;color:#3B6D11">Cadastro</span>`;
+      else if(r.acao==='edicao') badge=`<span class="audit-badge" style="background:#FAEEDA;color:#854F0B">Edição</span>`;
+      else badge=`<span class="audit-badge" style="background:#FCEAEA;color:#A32D2D">Exclusão</span>`;
       html+=`<div class="hist-item">
         <div class="hist-dot" style="background:${color}"></div>
         <div style="flex:1;min-width:0">
-          <div class="hist-name" style="display:flex;align-items:center;gap:7px">${r.nome} → ${r.destino} ${acaoBadge}</div>
+          <div class="hist-name" style="display:flex;align-items:center;gap:7px;flex-wrap:wrap">${r.nome} → ${r.destino} ${badge}</div>
           <div class="hist-detail">${vLabel} · Viagem: ${dataViagem}${r.obs?' · '+r.obs:''}</div>
+          ${r.feito_por?`<div class="hist-detail">Por: ${r.feito_por}</div>`:''}
         </div>
-        <div class="hist-meta">
-          <div class="hist-time" style="text-align:right">${feitoEm||'—'}</div>
-        </div>
+        <div class="hist-meta"><div class="hist-time" style="text-align:right">${feitoEm||'—'}</div></div>
       </div>`;
     }
     html+='</div>';
