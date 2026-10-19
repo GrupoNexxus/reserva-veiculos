@@ -247,7 +247,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;backgrou
   </div>
 </div>
 
-<div class="overlay" id="overlay" onclick="handleOverlayClick(event)">
+<div class="overlay" id="overlay" onmousedown="overlayMouseDown=(event.target===this)" onclick="handleOverlayClick(event)">
   <div class="modal" id="modal">
     <div class="modal-title" id="modal-title"></div>
     <div class="modal-sub" id="modal-sub"></div>
@@ -671,7 +671,11 @@ async function deleteEntry(id) {
 }
 
 function closeModal(){document.getElementById('overlay').classList.remove('open');}
-function handleOverlayClick(e){if(e.target===document.getElementById('overlay'))closeModal();}
+let overlayMouseDown=false;
+function handleOverlayClick(e){
+  if(e.target===document.getElementById('overlay') && overlayMouseDown) closeModal();
+  overlayMouseDown=false;
+}
 
 let histRows=[], histFilter='all', histFilterInitialized=false;
 
